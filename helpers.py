@@ -9,7 +9,7 @@ def extract_data_from_csv():
     This function requests the lidar data in CSV format and returns a tuple containing the relevant lidar data (x, y, z, reflec).
     """
     raw_data = [[],[],[],[]]
-        
+    
     file_path = input("Enter lidar data path (CSV):\n")
 
     while(not os.path.isfile(file_path)):
