@@ -2,29 +2,6 @@ import math
 import numpy as np
 from tqdm import tqdm
 
-def voxelize_and_normalize_data_with_intensity(data_list, num_voxels_per_dimension):
-    """
-    This function takes in a list of scans and returns a list of voxelized and normalized scans.
-    Note that in order to pass this into tensorflow functions, you will need to cast this to a numpy array.
-
-    This function differs from voxelize_and_normalize_data in that it also utilizes the intensity values of the points.
-    The average intensity value of the points in each voxel is stored in the voxelized scan.
-    Because of this, the voxelized scans will be 4D arrays instead of 3D arrays.
-    However, you can think of them as 3D arrays, where each voxel simply has two properties:
-        the number of points in the voxel and the average intensity value of the points in the voxel.
-
-    :param data_list: a list of scans, each scan being a list of x values, a list of y values, a list of z values,
-                        and a list of intensity values
-    :param num_voxels_per_dimension: the number of voxels per dimension to divide the scans into
-                                        (i.e. 32 means 32x32x32 voxels)
-    :return: a list of voxelized scans, each scan being a 3D array of the number of points in each voxel
-    """
-    voxelized_list = []
-    for i in tqdm(range(len(data_list))):
-        scan = voxelize_and_normalize_scan_with_intensity(data_list[i], num_voxels_per_dimension)
-        voxelized_list.append(scan)
-    return voxelized_list
-
 def voxelize_and_normalize_scan_with_intensity(scan, num_voxels_per_dimension):
     """
     This function takes in a scan and returns a voxelized and normalized scan.
