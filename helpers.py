@@ -88,4 +88,6 @@ def voxelize_and_normalize_scan_with_intensity(scan, num_voxels_per_dimension):
         # each voxel will contain an ordered pair of the density of points in that voxel and the average intensity of those points
         voxelized_scan[key[0]][key[1]][key[2]][:] = np.array(float(len(voxel_dict[key]) - min_density) / (max_density - min_density), np.mean(voxel_dict[key])) #TODO: make sure this really works
 
+    print("Successfully voxelized data")
+
     return voxelized_scan
