@@ -8,25 +8,24 @@ def extract_data_from_csv():
     """
     This function requests the lidar data in CSV format and returns a tuple containing the relevant lidar data (x, y, z, reflec).
     """
-    raw_data = []
-    with open('test.csv', 'w', newline='') as newcsvfile:
-
-        csvwriter = csv.writer(newcsvfile, delimiter=',',
-                            quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    raw_data = [[],[],[],[]]
         
-        file_path = input("Enter lidar data path (CSV):\n")
+    file_path = input("Enter lidar data path (CSV):\n")
 
-        while(not os.path.isfile(file_path)):
-            file_path = input("File path doesn't exist. Re-enter lidar data path (CSV format):\n")
-            
-        while(file_path[len(file_path)-3:len(file_path)].lower() != "csv"):
-            print(file_path[len(file_path)-3:len(file_path)])
-            file_path = input("Incorrect file type. Re-enter lidar data path (CSV format):\n")
+    while(not os.path.isfile(file_path)):
+        file_path = input("File path doesn't exist. Re-enter lidar data path (CSV format):\n")
+        
+    while(file_path[len(file_path)-3:len(file_path)].lower() != "csv"):
+        print(file_path[len(file_path)-3:len(file_path)])
+        file_path = input("Incorrect file type. Re-enter lidar data path (CSV format):\n")
 
-        with open(file_path, newline='') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                raw_data.append([row['X'], row['Y'], row['Z'], row['Reflectivity']])
+    with open(file_path, newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            raw_data[0].append(float(row['X']))
+            raw_data[1].append(float(row['Y']))
+            raw_data[2].append(float(row['Z']))
+            raw_data[3].append(float(row['Reflectivity']))
                 
     print("Successfully extracted lidar data from csv")
     return raw_data
