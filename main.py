@@ -1,29 +1,11 @@
-import csv
 import numpy as np
 from helpers import *
-import os.path
 
-raw_data = []
+raw_data = extract_data_from_csv()
 
-def extra_data_from_csv():
-    with open('test.csv', 'w', newline='') as newcsvfile:
+num_voxels_per_dimension = input("Enter the number of voxels per dimension you'd like (e.g. 10 means 10x10x10 voxels, if unsure, put 10):\n")
 
-        csvwriter = csv.writer(newcsvfile, delimiter=',',
-                            quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        
-        file_path = input("Enter lidar data path (CSV):\n")
+while(not num_voxels_per_dimension.isdigit() or int(num_voxels_per_dimension) <= 0):
+    num_voxels_per_dimension = input("Invalid entry. Enter the number of voxels per dimension you'd like (e.g. 10 means 10x10x10 voxels, if unsure, put 10):\n")
 
-        while(not os.path.isfile(file_path)):
-            file_path = input("File path doesn't exist. Re-enter lidar data path (CSV format):\n")
-            
-        while(file_path[len(file_path)-3:len(file_path)].lower() != "csv"):
-            print(file_path[len(file_path)-3:len(file_path)])
-            file_path = input("Incorrect file type. Re-enter lidar data path (CSV format):\n")
-
-        with open(file_path, newline='') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                raw_data.append([row['X'], row['Y'], row['Z'], row['Reflectivity']])
-    print("Success")
-
-extra_data_from_csv()
+voxelized_data = voxelize_and_normalize_scan_with_intensity(raw_data, num_voxels_per_dimension)
